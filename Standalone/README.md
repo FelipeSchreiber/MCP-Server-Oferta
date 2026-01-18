@@ -5,7 +5,7 @@ docker build -t my_server .
 
 ## Run
 ```bash
-docker run -d -p 8000:8000 my_server
+docker run -d -p 8000:8000 --env-file ../.env my_server
 ```
 
 ## Generate mcp.json for Local Docker
