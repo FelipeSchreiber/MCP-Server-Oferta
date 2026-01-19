@@ -35,7 +35,6 @@ src/backend/v4/mcp_server/
 │   └── settings.py        # Settings and configuration
 ├── mcp_server.py          # FastMCP server implementation
 ├── requirements.txt       # Python dependencies
-├── uv.lock               # Lock file for dependencies
 ├── Dockerfile            # Container configuration
 ├── docker-compose.yml    # Development container setup
 └── .vscode/              # VS Code configurations
