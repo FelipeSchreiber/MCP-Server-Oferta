@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import mcp_server as mcp_server_module
+from mcp_server import mcp_server as mcp_server_module
 
 
 def test_create_fastmcp_server_with_auth(monkeypatch):

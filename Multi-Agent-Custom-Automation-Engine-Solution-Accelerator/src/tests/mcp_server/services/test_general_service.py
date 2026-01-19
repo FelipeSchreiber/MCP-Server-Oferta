@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from services.general_service import GeneralService
+from services.demo_general_service import GeneralService
 
 
 class FakeMCP:

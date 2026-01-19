@@ -10,8 +10,8 @@ from config.settings import config
 from core.factory import MCPToolFactory
 from fastmcp.server.auth.providers.jwt import JWTVerifier
 from services.bb_demo_service import BBDemoService
-from services.tech_support_service import TechSupportService
-from services.general_service import GeneralService
+from services.demo_tech_support_service import TechSupportService
+from services.demo_general_service import GeneralService
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)

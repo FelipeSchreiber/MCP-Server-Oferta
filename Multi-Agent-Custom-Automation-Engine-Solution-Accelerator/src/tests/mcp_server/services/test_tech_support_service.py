@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from services.tech_support_service import TechSupportService
+from services.demo_tech_support_service import TechSupportService
 
 
 class FakeMCP:
