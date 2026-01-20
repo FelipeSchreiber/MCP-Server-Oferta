@@ -47,7 +47,9 @@ class MCPToolFactory:
         """Register a tool service with the factory."""
         self._services[service.domain] = service
 
-    def create_mcp_server(self, name: str = "BB MCP Server", auth=None) -> FastMCP:
+    def create_mcp_server(
+        self, name: str = "BB MCP Server", auth=None
+    ) -> FastMCP:
         """Create and configure the MCP server with all registered services."""
         self._mcp_server = FastMCP(name, auth=auth)
 

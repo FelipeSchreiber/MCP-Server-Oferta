@@ -17,13 +17,13 @@ A FastMCP-based Model Context Protocol (MCP) server for the Multi-Agent Custom A
 ## Architecture
 
 ```
-src/backend/v4/mcp_server/
+mcp_server/
 ├── core/                   # Core factory and base classes
 │   ├── __init__.py
 │   └── factory.py         # MCPToolFactory and base classes
 ├── services/               # Domain-specific service implementations
 │   ├── __init__.py
-│   ├── hr_service.py      # Human Resources tools
+│   ├── bb_demo_service.py # Demo tools and resources
 │   ├── tech_support_service.py # IT/Tech Support tools
 │   └── general_service.py # General purpose tools
 ├── utils/                  # Utility functions
@@ -44,15 +44,13 @@ src/backend/v4/mcp_server/
 
 ## Available Services
 
-### HR Service (Domain: hr)
+### BB Demo Service (Domain: demo)
 
-- **schedule_orientation_session**: Schedule orientation for new employees
-- **assign_mentor**: Assign mentors to new employees
-- **register_for_benefits**: Register employees for benefits
-- **provide_employee_handbook**: Provide employee handbook
-- **initiate_background_check**: Start background verification
-- **request_id_card**: Request employee ID cards
-- **set_up_payroll**: Configure payroll for employees
+- **add_two_numbers**: Adds two integer numbers together
+- **get_user_info**: Retrieves user information by user_id (with approval)
+- **get_config**: Provides application configuration (resource)
+- **get_user_telephone**: Retrieves user telephone by ID (resource template)
+- **analyze_data**: Creates data analysis prompts (prompt template)
 
 ### Tech Support Service (Domain: tech_support)
 
@@ -71,10 +69,10 @@ src/backend/v4/mcp_server/
 
 ### Development Setup
 
-1. **Clone and Navigate**:
+1. **Navigate to Directory**:
 
    ```bash
-   cd src/backend/v4/mcp_server
+   cd mcp_server
    ```
 
 2. **Install Dependencies**:
@@ -236,13 +234,13 @@ Run tests with pytest:
 
 ```bash
 # Run all tests
-pytest src/tests/mcp_server/
+pytest tests/
 
 # Run with coverage
-pytest --cov=. src/tests/mcp_server/
+pytest --cov=. tests/
 
 # Run specific test file
-pytest src/tests/mcp_server/test_hr_service.py -v
+pytest tests/test_services.py -v
 ```
 
 ## MCP Client Usage

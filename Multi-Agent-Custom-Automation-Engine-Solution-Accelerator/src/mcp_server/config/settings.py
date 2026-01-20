@@ -10,11 +10,11 @@ from pydantic_settings import BaseSettings
 
 class MCPServerConfig(BaseSettings):
     """MCP Server configuration."""
-    
+
     model_config = ConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
-        extra="ignore"  # This will ignore extra environment variables
+        extra="ignore",  # This will ignore extra environment variables
     )
 
     # Server settings
@@ -32,9 +32,6 @@ class MCPServerConfig(BaseSettings):
     # MCP specific settings
     server_name: str = Field(default="BBMCPServer")
     enable_auth: bool = Field(default=True)
-    
-    # Dataset path - added to handle the environment variable
-    dataset_path: str = Field(default="./datasets")
 
 
 # Global configuration instance

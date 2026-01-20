@@ -28,7 +28,9 @@ def format_mcp_response(
     # Add content fields
     for key, value in content.items():
         formatted_key = key.replace("_", " ").title()
-        response_parts.append(f"**{formatted_key}:** {value}")
+        response_parts.append(
+            f"**{formatted_key}:** {value}"
+        )
 
     response_parts.append("")  # Empty line
 
@@ -49,7 +51,9 @@ def format_mcp_response(
     return "\n".join(response_parts)
 
 
-def format_error_response(error_message: str, context: Optional[str] = None) -> str:
+def format_error_response(
+    error_message: str, context: Optional[str] = None
+) -> str:
     """
     Format an error response for MCP tools.
 
@@ -91,5 +95,7 @@ def format_success_response(
     auto_summary = summary or f"Successfully completed {action.lower()}"
 
     return format_mcp_response(
-        title=f"{action} Completed", content=details, agent_summary=auto_summary
+        title=f"{action} Completed",
+        content=details,
+        agent_summary=auto_summary,
     )

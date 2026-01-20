@@ -4,7 +4,6 @@ BB MCP Server - FastMCP server with organized tools and services.
 
 import argparse
 import logging
-###
 
 from config.settings import config
 from core.factory import MCPToolFactory
@@ -24,6 +23,7 @@ factory = MCPToolFactory()
 factory.register_service(BBDemoService())
 factory.register_service(TechSupportService())
 factory.register_service(GeneralService())
+
 
 def create_fastmcp_server():
     """Create and configure FastMCP server."""
@@ -45,13 +45,18 @@ def create_fastmcp_server():
                 )
 
         # Create MCP server
-        mcp_server = factory.create_mcp_server(name=config.server_name, auth=auth)
+        mcp_server = factory.create_mcp_server(
+            name=config.server_name,
+            auth=auth,
+        )
 
         logger.info("✅ FastMCP server created successfully")
         return mcp_server
 
     except ImportError:
-        logger.warning("⚠️  FastMCP not available. Install with: pip install fastmcp")
+        logger.warning(
+            "⚠️  FastMCP not available. Install with: pip install fastmcp"
+        )
         return None
 
 
@@ -69,7 +74,8 @@ def log_server_info():
     logger.info(f"🚀 {config.server_name} initialized")
     logger.info(f"📊 Total services: {summary['total_services']}")
     logger.info(f"🔧 Total tools: {summary['total_tools']}")
-    logger.info(f"🔐 Authentication: {'Enabled' if config.enable_auth else 'Disabled'}")
+    auth_status = "Enabled" if config.enable_auth else "Disabled"
+    logger.info(f"🔐 Authentication: {auth_status}")
 
     for domain, info in summary["services"].items():
         logger.info(
@@ -78,7 +84,10 @@ def log_server_info():
 
 
 def run_server(
-    transport: str = "stdio", host: str = "127.0.0.1", port: int = 9000, **kwargs
+    transport: str = "stdio",
+    host: str = "127.0.0.1",
+    port: int = 9000,
+    **kwargs,
 ):
     """Run the FastMCP server with specified transport."""
     if not mcp:
@@ -89,17 +98,24 @@ def run_server(
 
     logger.info(f"🤖 Starting FastMCP server with {transport} transport")
     if transport in ["http", "streamable-http", "sse"]:
-        logger.info(f"🌐 Server will be available at: http://{host}:{port}/mcp/")
+        logger.info(
+            "🌐 Server will be available at: "
+            f"http://{host}:{port}/mcp/"
+        )
         mcp.run(transport=transport, host=host, port=port, **kwargs)
     else:
         # For STDIO transport, only pass kwargs that are supported
-        stdio_kwargs = {k: v for k, v in kwargs.items() if k not in ["log_level"]}
+        stdio_kwargs = {
+            k: v for k, v in kwargs.items() if k not in ["log_level"]
+        }
         mcp.run(transport=transport, **stdio_kwargs)
 
 
 def main():
     """Main entry point with argument parsing."""
-    parser = argparse.ArgumentParser(description="BB Internal Developer Platform - MCP Server")
+    parser = argparse.ArgumentParser(
+        description="BB Internal Developer Platform - MCP Server"
+    )
     parser.add_argument(
         "--transport",
         "-t",
@@ -119,8 +135,12 @@ def main():
         default=9000,
         help="Port to bind to for HTTP transport (default: 9000)",
     )
-    parser.add_argument("--debug", action="store_true", help="Enable debug mode")
-    parser.add_argument("--no-auth", action="store_true", help="Disable authentication")
+    parser.add_argument(
+        "--debug", action="store_true", help="Enable debug mode"
+    )
+    parser.add_argument(
+        "--no-auth", action="store_true", help="Disable authentication"
+    )
 
     args = parser.parse_args()
 
@@ -138,7 +158,7 @@ def main():
         config.enable_auth = False
 
     # Print startup info
-    print(f"🚀 Starting BB MCP Server - Internal Developer Platform")
+    print("🚀 Starting BB MCP Server - Internal Developer Platform")
     print(f"📋 Transport: {args.transport.upper()}")
     print(f"🔧 Debug: {config.debug}")
     print(f"🔐 Auth: {'Enabled' if config.enable_auth else 'Disabled'}")

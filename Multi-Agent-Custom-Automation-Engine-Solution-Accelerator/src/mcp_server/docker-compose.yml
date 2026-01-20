@@ -10,7 +10,7 @@ services:
       - MCP_PORT=9000
       - MCP_DEBUG=true
       - MCP_ENABLE_AUTH=false
-      - MCP_SERVER_NAME=MACAE MCP Server
+      - MCP_SERVER_NAME=BB MCP Server
     volumes:
       - .:/app
     networks:
