@@ -1,0 +1,38 @@
+quarkus:
+  application:
+    name: BB MCP4J Server
+  
+  http:
+    port: ${MCP_SERVER_PORT:9000}
+    host: ${MCP_SERVER_HOST:0.0.0.0}
+  
+  log:
+    level: INFO
+    category:
+      "com.bb.mcp":
+        level: INFO
+  
+  oidc:
+    enabled: ${MCP_SERVER_ENABLE_AUTH:false}
+    auth-server-url: ${MCP_SERVER_AUTH_ISSUER:}
+    client-id: ${MCP_SERVER_AUTH_CLIENT_ID:}
+    credentials:
+      secret: ${MCP_SERVER_AUTH_CLIENT_SECRET:}
+    tls:
+      verification: none
+
+mcp:
+  server:
+    name: BB MCP4J Server
+    version: 1.0.0
+    description: Java-based MCP Server with Quarkus and LangChain4j
+    host: ${MCP_SERVER_HOST:0.0.0.0}
+    port: ${MCP_SERVER_PORT:9000}
+    debug: ${MCP_SERVER_DEBUG:false}
+    enable-auth: ${MCP_SERVER_ENABLE_AUTH:false}
+    auth:
+      tenant-id: ${MCP_SERVER_AUTH_TENANT_ID:}
+      client-id: ${MCP_SERVER_AUTH_CLIENT_ID:}
+      jwks-uri: ${MCP_SERVER_AUTH_JWKS_URI:}
+      issuer: ${MCP_SERVER_AUTH_ISSUER:}
+      audience: ${MCP_SERVER_AUTH_AUDIENCE:}
