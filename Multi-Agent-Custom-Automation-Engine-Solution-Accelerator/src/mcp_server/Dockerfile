@@ -10,7 +10,10 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 COPY . /app
 
 # Create non-root user
-RUN useradd --create-home --shell /bin/bash app && chown -R app:app /app
+RUN useradd --create-home --shell /bin/bash app
+
+# Make entrypoint script executable
+RUN chmod +x /app/entrypoint.sh && chown -R app:app /app
 
 # Switch to non-root user
 USER app
@@ -18,5 +21,5 @@ USER app
 # Expose port
 EXPOSE 9000
 
-# Run the server
-CMD ["python", "mcp_server.py", "--transport", "streamable-http", "--host", "0.0.0.0", "--port", "9000"]
+# Run the server using entrypoint script
+ENTRYPOINT ["/app/entrypoint.sh"]

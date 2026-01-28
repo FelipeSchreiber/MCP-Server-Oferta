@@ -5,6 +5,7 @@ General purpose MCP tools service.
 from core.factory import Domain, MCPToolBase
 from utils.date_utils import get_current_timestamp
 from utils.formatters import format_error_response, format_success_response
+from utils.tracing import trace_tool_call
 
 
 class GeneralService(MCPToolBase):
@@ -17,6 +18,7 @@ class GeneralService(MCPToolBase):
         """Register general tools with the MCP server."""
 
         @mcp.tool(tags={self.domain.value})
+        @trace_tool_call
         def greet_test(name: str) -> str:
             """Test for MCP - Greets the user with the provided name."""
             try:
@@ -36,6 +38,7 @@ class GeneralService(MCPToolBase):
                 )
 
         @mcp.tool(tags={self.domain.value})
+        @trace_tool_call
         async def get_server_status() -> str:
             """Get the current server status and information."""
             try:

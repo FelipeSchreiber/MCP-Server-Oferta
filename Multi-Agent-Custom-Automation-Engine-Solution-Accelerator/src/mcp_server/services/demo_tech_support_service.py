@@ -4,6 +4,7 @@ Tech Support MCP tools service.
 
 from core.factory import MCPToolBase, Domain
 from utils.formatters import format_success_response, format_error_response
+from utils.tracing import trace_tool_call
 
 
 class TechSupportService(MCPToolBase):
@@ -16,6 +17,7 @@ class TechSupportService(MCPToolBase):
         """Register tech support tools with the MCP server."""
 
         @mcp.tool(tags={self.domain.value})
+        @trace_tool_call
         async def send_welcome_email(
             employee_name: str, email_address: str
         ) -> str:
@@ -44,6 +46,7 @@ class TechSupportService(MCPToolBase):
                 )
 
         @mcp.tool(tags={self.domain.value})
+        @trace_tool_call
         async def set_up_office_365_account(
             employee_name: str,
             email_address: str,
@@ -75,6 +78,7 @@ class TechSupportService(MCPToolBase):
                 )
 
         @mcp.tool(tags={self.domain.value})
+        @trace_tool_call
         async def configure_laptop(
             employee_name: str,
             laptop_model: str,
@@ -112,6 +116,7 @@ class TechSupportService(MCPToolBase):
                 )
 
         @mcp.tool(tags={self.domain.value})
+        @trace_tool_call
         async def setup_vpn_access(
             employee_name: str, access_level: str = "Standard"
         ) -> str:
@@ -141,6 +146,7 @@ class TechSupportService(MCPToolBase):
                 )
 
         @mcp.tool(tags={self.domain.value})
+        @trace_tool_call
         async def create_system_accounts(
             employee_name: str, systems: str = "Standard business systems"
         ) -> str:

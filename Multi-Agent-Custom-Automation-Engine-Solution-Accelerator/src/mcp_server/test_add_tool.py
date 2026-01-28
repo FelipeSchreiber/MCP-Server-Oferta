@@ -21,10 +21,10 @@ def parse_sse_response(text: str):
 
 async def test_add_two_numbers():
     """Test the add_two_numbers tool via MCP HTTP endpoint."""
-    
+
     # MCP server URL
     url = "http://localhost:9000/mcp"
-    
+
     async with httpx.AsyncClient(timeout=30.0) as client:
         # Initialize session
         print("🔄 Initializing MCP session...")
@@ -48,31 +48,31 @@ async def test_add_two_numbers():
                 "Accept": "application/json, text/event-stream"
             }
         )
-        
+
         print(f"📋 Init Response: {init_response.status_code}")
         if init_response.status_code == 200:
             # For SSE responses, content might be empty or event-stream format
             try:
                 response_data = init_response.json()
                 print(f"✅ {response_data}")
-            except:
-                print(f"✅ Connected (SSE stream)")
+            except Exception:
+                print("✅ Connected (SSE stream)")
                 print(f"   Response text: {init_response.text[:200]}")
         else:
             print(f"❌ {init_response.text}")
             return
-        
+
         # Get session ID from headers
         session_id = init_response.headers.get("mcp-session-id")
         print(f"🔑 Session ID: {session_id}")
-        
+
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text/event-stream"
         }
         if session_id:
             headers["mcp-session-id"] = session_id
-        
+
         # List available tools
         print("\n🔄 Listing available tools...")
         tools_response = await client.post(
@@ -84,19 +84,19 @@ async def test_add_two_numbers():
             },
             headers=headers
         )
-        
+
         print(f"📋 Tools Response: {tools_response.status_code}")
         if tools_response.status_code == 200:
             tools_data = parse_sse_response(tools_response.text)
             if tools_data:
-                print(f"✅ Available tools:")
+                print("✅ Available tools:")
                 for tool in tools_data.get("result", {}).get("tools", []):
                     print(f"   - {tool.get('name')}: {tool.get('description')}")
             else:
                 print(f"⚠️  Could not parse response: {tools_response.text[:200]}")
         else:
             print(f"❌ {tools_response.text}")
-        
+
         # Call add_two_numbers tool
         print("\n🔄 Calling add_two_numbers(5, 3)...")
         call_response = await client.post(
@@ -115,7 +115,7 @@ async def test_add_two_numbers():
             },
             headers=headers
         )
-        
+
         print(f"📋 Call Response: {call_response.status_code}")
         if call_response.status_code == 200:
             result = parse_sse_response(call_response.text)

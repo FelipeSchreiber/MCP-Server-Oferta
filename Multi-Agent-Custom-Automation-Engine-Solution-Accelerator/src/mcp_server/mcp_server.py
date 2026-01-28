@@ -11,6 +11,7 @@ from fastmcp.server.auth.providers.jwt import JWTVerifier
 from services.bb_demo_service import BBDemoService
 from services.demo_tech_support_service import TechSupportService
 from services.demo_general_service import GeneralService
+from utils.tracing import trace_span
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -60,21 +61,19 @@ def create_fastmcp_server():
         return None
 
 
-
 # Create FastMCP server instance for fastmcp run command
 mcp = create_fastmcp_server()
 
-# Add /health endpoint if mcp is available
+# Add /health endpoint
 if mcp:
-    try:
-        from starlette.requests import Request
-        from starlette.responses import PlainTextResponse
-        
-        @mcp.custom_route("/health", methods=["GET"])
-        async def health_check(request: Request) -> PlainTextResponse:
-            return PlainTextResponse("OK")
-    except ImportError:
-        pass
+    from starlette.requests import Request
+    from starlette.responses import PlainTextResponse
+
+    @mcp.custom_route("/health", methods=["GET"])
+    @trace_span("health_check")
+    async def health_check(request: Request) -> PlainTextResponse:
+        """Health check endpoint."""
+        return PlainTextResponse("OK")
 
 
 def log_server_info():

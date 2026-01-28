@@ -2,6 +2,7 @@
 
 from fastmcp import FastMCP, Context
 from core.factory import MCPToolBase, Domain
+from utils.tracing import trace_tool_call
 
 
 class BBDemoService(MCPToolBase):
@@ -26,6 +27,7 @@ class BBDemoService(MCPToolBase):
             tags={self.domain.value, "math", "addition"},
             meta={"version": "1.0", "author": "bb-platform"},
         )
+        @trace_tool_call
         def add(a: int, b: int) -> int:
             """Adds two integer numbers together."""
             return a + b
@@ -41,6 +43,7 @@ class BBDemoService(MCPToolBase):
             tags={self.domain.value, "user", "profile", "info"},
             meta={"version": "1.0", "author": "bb-platform"},
         )
+        @trace_tool_call
         async def get_user_info(ctx: Context, user_id: int) -> dict:
             """Retrieves user information by user_id with approval."""
             result = await ctx.elicit("Choose an action")
