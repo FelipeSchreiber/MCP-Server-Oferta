@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from services.demo_general_service import GeneralService
 
 
@@ -13,9 +15,6 @@ class FakeMCP:
             return fn
 
         return decorator
-
-
-import pytest
 
 
 @pytest.mark.asyncio

@@ -20,8 +20,8 @@ FROM eclipse-temurin:17-jre-alpine
 # Set working directory
 WORKDIR /app
 
-# Install wget for health check
-RUN apk add --no-cache wget
+# Install wget for health check (pin version)
+RUN apk add --no-cache wget=1.21.3-r2
 
 # Copy the Quarkus runner from builder stage
 COPY --from=builder /app/target/quarkus-app/lib/ /app/lib/

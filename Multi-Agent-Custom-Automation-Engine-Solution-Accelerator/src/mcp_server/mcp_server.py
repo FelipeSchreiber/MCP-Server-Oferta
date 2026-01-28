@@ -60,7 +60,6 @@ def create_fastmcp_server():
         return None
 
 
-
 # Create FastMCP server instance for fastmcp run command
 mcp = create_fastmcp_server()
 
@@ -69,7 +68,7 @@ if mcp:
     try:
         from starlette.requests import Request
         from starlette.responses import PlainTextResponse
-        
+
         @mcp.custom_route("/health", methods=["GET"])
         async def health_check(request: Request) -> PlainTextResponse:
             return PlainTextResponse("OK")
