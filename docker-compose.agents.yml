@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  agent-template:
+    image: agent-template:latest
+    container_name: agent-template-test
+    networks:
+      - mcp_server_mcp-network
+    environment:
+      - MONGODB_URI=mongodb://admin:admin123@agent-memory-mongodb:27017/
+      - MCP_SERVER_URL=http://mcp_server-mcp-server-1:9000/mcp
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LOG_LEVEL=INFO
+
+  orchestrator-agent:
+    image: orchestrator-agent:latest
+    container_name: orchestrator-agent-test
+    networks:
+      - mcp_server_mcp-network
+    environment:
+      - MONGODB_URI=mongodb://admin:admin123@agent-memory-mongodb:27017/
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LOG_LEVEL=INFO
+
+networks:
+  mcp_server_mcp-network:
+    external: true
